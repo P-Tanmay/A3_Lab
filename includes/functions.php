@@ -1,18 +1,19 @@
-<?
+<?php
 // do the connection first, then write a query
 $user = "root";
-$pass = "root";
+$pass = "";
 $host = "localhost";
-$db = "a3_cooperInfo";
+$db = "a3_coopertntro";
 
 $conn = mysqli_connect($host, $user, $pass, $db);
+mysqli_set_charset($conn, 'utf8');
 
 if (!$conn) {
   echo 'sumpin done gone wrong, son';
   exit;
 }
 
-echo 'connected, yo!';
+//echo 'connected, yo!';
 // 1. do a select for all of the car data
 //
 // $myQuery = "SELECT * FROM mainmodel";

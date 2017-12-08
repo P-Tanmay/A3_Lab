@@ -1,35 +1,37 @@
 (function () {
 
-var carButtons = document.querySelectorAll('.data-ref');
-  const httpRequest = new XMLHttpRequest();
-
-
-
   // select the cars from the DOM (the web page) using the data-ref class. this creates a list of elements; it's like an array, so we can loop through them and do things like add event listeners and change classes one at a time with a forEach method (method is just another word for function)
 
   // constants are exactly what the word means - something that doesn't change. You can't change or redefine a constant once it's declared, so they're good for things that are meant to be constant throughout the runtime of an app
-  //const carButtons = document.querySelectorAll('.data-ref');
-
+   const carButtons = document.querySelectorAll('.data-ref');
+   const httpRequest = new XMLHttpRequest();
 
   // the XMLHttpRequest object is a built-in part of every browser's JavaScript API. It has methods (functions) and propeties that you can run to do an AJAX request. Declaring it with round brackets at the end instantiates (creates) a new instance of the object.
   //const httpRequest = new XMLHttpRequest();
 
   // the getCarData function fires every time you click on a car thumbnail; it passes itself into the function (the 'this' keyword referes to the object that called the function => the element clicked on) so that we can use that element's ID attribute as a reference to pass to the query we want to run. We're retrieving a single row from the database where the ID that we pass matches the field we've referenced in the query (in the functions.php file)
   function getCarData() {
-    const url = '.includes/functions.php?carModel=' + this.id;
+    const url = './includes/functions.php?carModel=' + this.id;
 
+    fetch(url)
+    .then((resp) => resp.json())
+    .then((data) => { processResult(data); })
+    .catch(function(error) {
+      console.log(error);
+
+    });
 
     // make an AJAX call to the database; handle errors first
     //if (!httpRequest) { // this is for older browser that don't support AJAX
     //  alert('Giving up :( Cannot create an XMLHTTP instance');
     //  return false; // exit the whole process and don't do anything else - we're done
-    }
+    //}
 
     // there are 4 stages to an AJAX request: the init, sending the url, getting the response, and done. every time that state changes (the readystate) we fire the processRequest function to catch errors or do something with the data that gets returned from the database when the request is finished
     //httpRequest.onreadystatechange = processRequest;
     //httpRequest.open('GET', './includes/functions.php?carModel=' + this.id); // pass in the id from the element we're clicking on
   //  httpRequest.send(); // run the PHP file (or whatever is in the .open method above)
-  }
+//  }
 
   // httpRequest.onreadystatechange (on line 19) will call this 4 times. We process / monitor the status of the AJAX call. When it's done (lines 29 and 30) that means our call was successful and we have some data returned from the database to process
 //  function processRequest() {
@@ -47,8 +49,8 @@ var carButtons = document.querySelectorAll('.data-ref');
     //  } else {
         // if anything went wrong with the AJAX call, this will be called instead and we'll be done => need to fix any errors
     //    alert('There was a problem with the request.');
-      }
-    }
+      //}
+  //  }
   }
 
   // processResult is run when the AJAX call is complete and we have the data back. It gets called on line 36, and the data variable gets passed in from that function (it's the JavaScript object we got from the database)
